@@ -1,12 +1,15 @@
 import numpy as np
 
-n = 1  # 1 type
-m = 1  # 2 type
+n = 0  # 1 type
+m = 10  # 2 type
 k = 2  # repair devices
-h1 = 0.0346  # 1 type failure rate
-h2 = 0.0112  # 2 type failure rate
+# h1 = 0.0346  # 1 type failure rate
+h1 = 0
+h2 = 1 - 0.99999273916848708  # 2 type failure rate
 mu1 = 1  # 1 type repair rate
 mu2 = 1  # 2 type repair rate
+
+acceptable_failures = 3
 
 
 class P:
@@ -143,73 +146,73 @@ def resolve(coefs):
     return answer
 
 
-# links = generate_col_matrix(n, m, k, h1, h2, mu1, mu2)
-# print("Уравнения")
-# rows = xprint(links, n, m)
-# answer = resolve(rows)
+links = generate_col_matrix(n, m, k, h1, h2, mu1, mu2)
+print("Уравнения")
+rows = xprint(links, n, m)
+answer = resolve(rows)
+print(answer[P(0, 0).number()])
+# print((L ** 2) / h2)
+
+# cpus = [
+#     (1.98575E-06, 10400),
+#     (1.68966E-06, 16500),
+#     (1.44737E-06, 17000)
+# ]
+# disks = [
+#     (2.937E-06, 11800),
+#     (2.46944E-06, 9000),
+# ]
+# mothers = [
+#     (3.42279E-06, 8500),
+#     (5.12457E-06, 24500),
+#     (2.78332E-06, 12500),
+#     (4.76712E-06, 9900)
+# ]
+# rams = [
+#     (4.01972E-06, 3900),
+#     (3.15977E-06, 6750),
+#     (5.60736E-07, 5000),
+# ]
 #
-# print("Решение:")
-# print(answer[P(0,0).number()])
+#
+# kgs = []
+#
+# for a in cpus:
+#     for b in disks:
+#         links = generate_col_matrix(n, m, k, a[0], b[0], mu1, mu2)
+#         rows = xprint(links, n, m)
+#         answer = resolve(rows)
+#         kgs.append((answer[P(0, 0).number()], a, b, a[1] + b[1]))
+#
+# kgs2 = []
+# for a in rams:
+#     for b in mothers:
+#         links = generate_col_matrix(n, m, k, a[0], b[0], mu1, mu2)
+#         rows = xprint(links, n, m)
+#         answer = resolve(rows)
+#         kgs2.append((answer[P(0, 0).number()], a, b, a[1] + b[1]))
+#
+# result = []
+# for value in kgs:
+#     for value2 in kgs2:
+#         result.append((value[0] * value2[0], value[3] + value2[3], list(value[1:3] + value2[1:3])))
+#
+# min_price = min([r[1] for r in result])
+# max_price = max(r[1] for r in result)
+#
+# finish = []
+# last_max = 0
+# for price in range(min_price, max_price + 1):
+#     tmp = [r for r in result if r[1] < price]
+#     if not tmp:
+#         continue
+#     maxim = max(tmp, key=lambda x: x[0])
+#     if last_max < maxim[0]:
+#         finish.append(maxim)
+#         last_max = maxim[0]
 
-cpus = [
-    (1.98575E-06, 10400),
-    (1.68966E-06, 16500),
-    (1.44737E-06, 17000)
-]
-disks = [
-    (2.937E-06, 11800),
-    (2.46944E-06, 9000),
-]
-mothers = [
-    (3.42279E-06, 8500),
-    (5.12457E-06, 24500),
-    (2.78332E-06, 12500),
-    (4.76712E-06, 9900)
-]
-rams = [
-    (4.01972E-06, 3900),
-    (3.15977E-06, 6750),
-    (5.60736E-07, 5000),
-]
-
-
-kgs = []
-
-for a in cpus:
-    for b in disks:
-        links = generate_col_matrix(n, m, k, a[0], b[0], mu1, mu2)
-        rows = xprint(links, n, m)
-        answer = resolve(rows)
-        kgs.append((answer[P(0, 0).number()], a, b, a[1] + b[1]))
-
-kgs2 = []
-for a in rams:
-    for b in mothers:
-        links = generate_col_matrix(n, m, k, a[0], b[0], mu1, mu2)
-        rows = xprint(links, n, m)
-        answer = resolve(rows)
-        kgs2.append((answer[P(0, 0).number()], a, b, a[1] + b[1]))
-
-result = []
-for value in kgs:
-    for value2 in kgs2:
-        result.append((value[0] * value2[0], value[3] + value2[3], list(value[1:3] + value2[1:3])))
-
-min_price = min([r[1] for r in result])
-max_price = max(r[1] for r in result)
-
-finish = []
-last_max = 0
-for price in range(min_price, max_price + 1):
-    tmp = [r for r in result if r[1] < price]
-    if not tmp:
-        continue
-    maxim = max(tmp, key=lambda x: x[0])
-    if last_max < maxim[0]:
-        finish.append(maxim)
-        last_max = maxim[0]
-
-for i in result:
-    print(i[1])
-for i in finish:
-    print(i[:2])
+# for i in result:
+#     print(i[1])
+#
+# for i in finish:
+#     print(i[:2])
